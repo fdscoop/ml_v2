@@ -74,11 +74,10 @@ class MarketAnalyzer:
         except Exception as e:
             logger.error(f"Market structure analysis error: {e}")
             return {}
-
-    def analyze_technical_indicators(self) -> Dict[str, Any]:
+    def analyze_technical_indicators(self, payload) -> Dict[str, Any]:
         """Analyze technical indicators using price data"""
         try:
-            index_history = self.historical_data.get('index', [])
+            index_history = payload.get('historical_data', {}).get('index', [])
             
             if not index_history:
                 return {'error': 'Insufficient historical data'}
