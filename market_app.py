@@ -21,6 +21,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+@app.route('/')
+def index():
+    return jsonify(APIResponse(
+        status='success',
+        message='Market Analysis API is running'
+    ).to_dict()), 200
+
 def create_app(config=None):
     """Create and configure the Flask application"""
     app = Flask(__name__)
