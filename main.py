@@ -1,5 +1,4 @@
 import os
-from flask import Flask
 from market_app import create_app as create_market_app
 
 def create_app():
