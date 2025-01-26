@@ -1375,28 +1375,21 @@ def create_app(config: Optional[Dict[str, Any]] = None) -> Flask:
     return app
 
 def validate_market_data(data: Dict[str, Any]) -> bool:
-    """Validate market data payload"""
     try:
         required_keys = ['historical_data', 'current_market']
         if not all(key in data for key in required_keys):
-            logger.warning("Missing required keys in market data")
+            logger.warning("Missing required keys")
             return False
 
-        # Validate historical data
-        historical_data = data.get('historical_data', {})
-        if not historical_data.get('index'):
-            logger.warning("Missing historical index data")
-            return False
-
-        # Validate current market data
-        current_market = data.get('current_market', {})
-        if not current_market.get('index') or not current_market.get('vix'):
-            logger.warning("Missing current market data")
+        index_data = data.get('historical_data', {}).get('index', [])
+        if not index_data or not all(key in index_data[0].get('price_data', {})
+                                   for key in ['open', 'high', 'low', 'close']):
+            logger.warning("Invalid price data structure")
             return False
 
         return True
     except Exception as e:
-        logger.error(f"Market data validation error: {str(e)}")
+        logger.error(f"Payload validation error: {e}")
         return False
 
 def validate_strategy_request(data: Dict[str, Any]) -> bool:
