@@ -1425,7 +1425,3 @@ def validate_strategy_request(data: Dict[str, Any]) -> bool:
     except Exception as e:
         logger.error(f"Strategy request validation error: {str(e)}")
         return False
-
-if __name__ == '__main__':
-    app = create_app()
-    app.run(host='0.0.0.0', port=5000)

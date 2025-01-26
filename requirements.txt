@@ -1,6 +1,11 @@
-Flask
-pandas
-numpy
-scipy
-requests
+flask
 gunicorn
+numpy
+pandas
+scipy
+python-dateutil
+markupsafe
+werkzeug
+itsdangerous
+click
+importlib-metadata
