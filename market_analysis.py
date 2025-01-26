@@ -1394,21 +1394,14 @@ def validate_market_data(data: Dict[str, Any]) -> bool:
 def validate_strategy_request(data: Dict[str, Any]) -> bool:
     """Validate strategy generation request"""
     try:
-        required_keys = ['market_data', 'optimal_options', 'technical_analysis']
-        if not all(key in data for key in required_keys):
-            logger.warning("Missing required keys in strategy request")
+        # Check for essential keys
+        if not data or not isinstance(data, dict):
+            logger.warning("Invalid or empty request data")
             return False
 
-        # Validate market data
-        market_data = data.get('market_data', {})
-        if not market_data.get('current_market'):
-            logger.warning("Missing current market data")
-            return False
-
-        # Validate options data
-        optimal_options = data.get('optimal_options', {})
-        if not isinstance(optimal_options, dict):
-            logger.warning("Invalid optimal options format")
+        # Ensure market structure and other key data are present
+        if not data.get('market_structure') or not data.get('technical_analysis'):
+            logger.warning("Missing market structure or technical analysis data")
             return False
 
         return True
