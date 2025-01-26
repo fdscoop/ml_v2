@@ -158,17 +158,10 @@ def create_app(config=None):
         try:
             payload = request.get_json()
             
-            # Validate strategy request
-            if not validate_strategy_request(payload):
-                return jsonify(APIResponse(
-                    status='error',
-                    error='Invalid strategy request format'
-                ).to_dict()), 400
-
-            # Generate trading strategy
+            # Use the payload from the analysis response directly
             strategy = strategy_generator.generate_trading_strategy(
-                payload.get('market_data', {}),
-                payload.get('optimal_options', {}),
+                payload,
+                payload.get('trading_strategy', {}).get('primary_strategy', {}),
                 payload.get('technical_analysis', {})
             )
             
@@ -183,7 +176,7 @@ def create_app(config=None):
                 status='error',
                 error='Strategy generation error'
             ).to_dict()), 500
-
+    
     @app.errorhandler(404)
     def not_found(error):
         """Handle 404 errors"""
