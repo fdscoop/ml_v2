@@ -67,7 +67,6 @@ class MarketAnalyzer:
         try:
             current_market = self.current_market.get('index', {})
             vix_data = self.current_market.get('vix', {})
-
             return {
                 'price_levels': self._analyze_price_levels(current_market),
                 'trend_analysis': self._analyze_trend(current_market),
