@@ -1,7 +1,12 @@
-flask
-numpy
-pandas
-scipy
-python-dateutil
-logging
-gunicorn
+flask==2.3.2
+numpy==1.24.3
+pandas==2.0.1
+scipy==1.10.1
+python-dateutil==2.8.2
+gunicorn==20.1.0
+# Remove logging as it's a built-in Python module
+werkzeug==2.3.4
+markupsafe==2.1.3
+itsdangerous==2.1.2
+click==8.1.3
+importlib-metadata==6.6.0
