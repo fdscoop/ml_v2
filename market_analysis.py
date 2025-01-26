@@ -641,10 +641,13 @@ class OptionsStrategyGenerator:
             return self._generate_default_strategy()
 
     def _extract_market_condition(self,
-                                market_data: Dict[str, Any],
-                                technical_analysis: Dict[str, Any]) -> MarketCondition:
+                              market_data: Dict[str, Any],
+                              technical_analysis: Dict[str, Any]) -> MarketCondition:
         """Extract market conditions from data"""
+        # Extract VIX from market_data (which is now the full payload)
         vix = market_data.get('current_market', {}).get('vix', {}).get('ltp', 0)
+        
+        # Get technical indicators and options data
         momentum = technical_analysis.get('momentum_indicators', {})
         options = market_data.get('options_analysis', {})
         

@@ -153,15 +153,15 @@ def create_app(config=None):
     @app.route('/api/v1/strategy', methods=['POST'])
     @validate_request
     @log_request
-    def generate_strategy():
+    def generate_strategy() -> Tuple[Dict[str, Any], int]:
         """Strategy generation endpoint"""
         try:
             payload = request.get_json()
             
-            # Use the payload from the analysis response directly
+            # Generate trading strategy using full payload
             strategy = strategy_generator.generate_trading_strategy(
                 payload,
-                payload.get('trading_strategy', {}).get('primary_strategy', {}),
+                payload.get('options_analysis', {}).get('optimal_options', {}),
                 payload.get('technical_analysis', {})
             )
             
